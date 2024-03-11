@@ -5,7 +5,7 @@ API_KEY = 'b23fc22e2b337a48421b2b94b1fa5e80'
 
 SPORT = 'basketball_nba' # NBA sport key
 REGIONS = 'us' # Focusing on US region
-MARKETS = 'totals' # Focusing on spreads market
+MARKETS = 'totals' #Totals market
 ODDS_FORMAT = 'decimal' # Using decimal format for odds
 DATE_FORMAT = 'iso' # Using ISO format for dates
 
@@ -15,12 +15,7 @@ sports_response = requests.get(
     params={'api_key': API_KEY}
 )
 
-if sports_response.status_code == 200:
-    print('List of in season sports:', sports_response.json())
-else:
-    print(f'Failed to get sports: status_code {sports_response.status_code}, response body {sports_response.text}')
 
-# Fetching NBA odds
 odds_response = requests.get(
     f'https://api.the-odds-api.com/v4/sports/{SPORT}/odds',
     params={
@@ -34,9 +29,8 @@ odds_response = requests.get(
 
 if odds_response.status_code == 200:
     odds_json = odds_response.json()
-    print('Number of NBA events:', len(odds_json))
-    print(odds_json) # This prints the fetched odds data
-    # Check the usage quota
+#    print('Number of NBA events:', len(odds_json))
+#    print(odds_json) # This prints the fetched odds data
     print('Remaining requests', odds_response.headers['x-requests-remaining'])
     print('Used requests', odds_response.headers['x-requests-used'])
 else:
@@ -45,8 +39,8 @@ else:
 
 odds_data = odds_json
 
-# Prepare lists to hold extracted data
 events = []
+eventIdCleaner = []
 for event in odds_data:
     event_id = event['id']
     sport_key = event['sport_key']
@@ -65,15 +59,13 @@ for event in odds_data:
                     team = outcome['name']
                     price = outcome['price']
                     point = outcome['point']
-
-                    # Append each record to the events list
-                    events.append([event_id, home_team, away_team, 
+                    if event_id not in eventIdCleaner:
+                        events.append([event_id, home_team, away_team, 
                                     bookmaker_title, point])
-
-# Create a DataFrame from the events list
+                        
+                    eventIdCleaner.append(event_id)
 columns = ['Event ID', 'Home Team', 'Away Team', 
            'Bookmaker Title', 'Totals']
 df = pd.DataFrame(events, columns=columns)
 
-# Display the DataFrame
 print(df)
