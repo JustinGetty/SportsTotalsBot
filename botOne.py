@@ -106,7 +106,7 @@ def sendEmail(message):
         server.login(SENDER_EMAIL, EMAIL_PASSWORD)
         server.sendmail(SENDER_EMAIL, RECEIVER_EMAIL, message)
 
-#FIX TO ALERT FOR 15 POINT CHANGE INSTEAD OF ANY CHANGE
+#FIX to pull data at start of the game and then compare every 20 minutes to the start 
 if __name__ == '__main__':
     while True:
         while datetime.datetime.now().hour >= 18 and datetime.datetime.now().hour < 24: 
