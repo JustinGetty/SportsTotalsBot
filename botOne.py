@@ -47,12 +47,20 @@ def getTotals():
     else:
         print(f'Its broken')
     return odds_json
+#Find more implicit compare method
+def compareOutputs(df1, df2):
+    merged_df = pd.merge(df1, df2, on='Event ID', suffixes=('_df1', '_df2'))
 
-def compareOutputs(one, two):
+    merged_df['Totals Difference'] = (merged_df['Totals_df1'] - merged_df['Totals_df2']).abs()
 
-    diff = one.compare(two)
-    print("Differences:\n", diff)
-    return diff
+    significant_diffs = merged_df[merged_df['Totals Difference'] >= 15]
+
+    if significant_diffs.empty:
+        print("No significant differences in Totals found.")
+        return False
+    else:
+        print(significant_diffs[['Event ID', 'Totals_df1', 'Totals_df2', 'Totals Difference']])
+        return significant_diffs[['Event ID', 'Totals_df1', 'Totals_df2', 'Totals Difference']]
 
 def cleanShittyJson():
     odds_data = getTotals()
@@ -92,6 +100,7 @@ def sendEmail(message):
         server.login(SENDER_EMAIL, EMAIL_PASSWORD)
         server.sendmail(SENDER_EMAIL, RECEIVER_EMAIL, message)
 
+#FIX TO ALERT FOR 15 POINT CHANGE INSTEAD OF ANY CHANGE
 if __name__ == '__main__':
     while True:
         while datetime.datetime.now().hour >= 18 and datetime.datetime.now().hour < 24: 
@@ -101,10 +110,14 @@ if __name__ == '__main__':
             time.sleep(1200) 
             print("Prompting 2")
             dataTwo = cleanShittyJson()
-            difference = compareOutputs(data, dataTwo)
-            message = f"From: {SENDER_EMAIL}\nTo: {RECEIVER_EMAIL}\nSubject: Change in totals\n\nHere is the first fra                      me: {data.to_string()} and here is the second frame: {dataTwo.to_string()}. Here is the differen                      ce: {difference}"
-            sendEmail(message)
-            print("email sent")
+            print(dataTwo)
+            if compareOutputs(data, dataTwo) != False:
+                difference = compareOutputs(data, dataTwo)
+                message = f"From: {SENDER_EMAIL}\nTo: {RECEIVER_EMAIL}\nSubject: Change in totals\n\nHere is the first fra                      me: {data.to_string()} and here is the second frame: {dataTwo.to_string()}. Here is the difference: \n {difference}"
+                sendEmail(message)
+                print("email sent")
+            else:
+                print("No significant diference, no email sent")
 
 
 
