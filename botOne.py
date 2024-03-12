@@ -49,18 +49,23 @@ def getTotals():
     return odds_json
 #Find more implicit compare method
 def compareOutputs(df1, df2):
+    # Merge the two DataFrames on 'Event ID'
     merged_df = pd.merge(df1, df2, on='Event ID', suffixes=('_df1', '_df2'))
 
+    # Calculate the absolute difference in 'Totals' and add it as a new column
     merged_df['Totals Difference'] = (merged_df['Totals_df1'] - merged_df['Totals_df2']).abs()
 
+    # Filter rows where the difference in 'Totals' is 15 or more
     significant_diffs = merged_df[merged_df['Totals Difference'] >= 15]
 
+    # Check if there are any significant differences
     if significant_diffs.empty:
         print("No significant differences in Totals found.")
-        return False
+        return False, None  # Return False indicating no significant differences, and None for the DataFrame
     else:
+        # If significant differences were found, print them and return True and the DataFrame
         print(significant_diffs[['Event ID', 'Totals_df1', 'Totals_df2', 'Totals Difference']])
-        return significant_diffs[['Event ID', 'Totals_df1', 'Totals_df2', 'Totals Difference']]
+        return True, significant_diffs[['Event ID', 'Totals_df1', 'Totals_df2', 'Totals Difference']]
 
 def cleanShittyJson():
     odds_data = getTotals()
@@ -93,6 +98,7 @@ def cleanShittyJson():
                'Bookmaker Title', 'Totals']
     df = pd.DataFrame(events, columns=columns)
     return df
+
 def sendEmail(message):
     context = ssl.create_default_context()
 
@@ -111,9 +117,11 @@ if __name__ == '__main__':
             print("Prompting 2")
             dataTwo = cleanShittyJson()
             print(dataTwo)
-            if compareOutputs(data, dataTwo) != False:
-                difference = compareOutputs(data, dataTwo)
-                message = f"From: {SENDER_EMAIL}\nTo: {RECEIVER_EMAIL}\nSubject: Change in totals\n\nHere is the first fra                      me: {data.to_string()} and here is the second frame: {dataTwo.to_string()}. Here is the difference: \n {difference}"
+
+            hasDifference, difference = compareOutputs(data, dataTwo)
+            if hasDifference:
+                print(difference)
+                message = f"From: {SENDER_EMAIL}\nTo: {RECEIVER_EMAIL}\nSubject: Change in totals\n\nHere is the difference: \n {difference}"
                 sendEmail(message)
                 print("email sent")
             else:
