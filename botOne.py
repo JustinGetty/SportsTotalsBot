@@ -5,6 +5,9 @@ import datetime
 import time
 import smtplib
 import ssl
+# Currently checks every 20 minutes for a 15 or more change in the total, sending an email if met
+# TODO fix the dataframe for output to include game and time
+# TODO adjust logic to pull frame 1 at start of game and reset frame 2 every 20 min to compare
 SMTP_SERVER = "smtp.gmail.com"
 SMTP_PORT = 465
 SENDER_EMAIL = "justingetty55@gmail.com"
@@ -49,7 +52,6 @@ def getTotals():
     return odds_json
 #Find more implicit compare method
 def compareOutputs(df1, df2):
-    # Merge the two DataFrames on 'Event ID'
     merged_df = pd.merge(df1, df2, on='Event ID', suffixes=('_df1', '_df2'))
 
     # Calculate the absolute difference in 'Totals' and add it as a new column
@@ -58,15 +60,17 @@ def compareOutputs(df1, df2):
     # Filter rows where the difference in 'Totals' is 15 or more
     significant_diffs = merged_df[merged_df['Totals Difference'] >= 15]
 
+    # Select columns to include the team names along with the Event ID and Totals Difference
+    output_columns = ['Event ID', 'Home Team_df1', 'Away Team_df1', 'Totals_df1', 'Totals_df2', 'Totals Difference']
+
     # Check if there are any significant differences
     if significant_diffs.empty:
         print("No significant differences in Totals found.")
         return False, None  # Return False indicating no significant differences, and None for the DataFrame
     else:
         # If significant differences were found, print them and return True and the DataFrame
-        print(significant_diffs[['Event ID', 'Totals_df1', 'Totals_df2', 'Totals Difference']])
-        return True, significant_diffs[['Event ID', 'Totals_df1', 'Totals_df2', 'Totals Difference']]
-
+        print(significant_diffs[output_columns])
+        return True, significant_diffs[output_columns]
 def cleanShittyJson():
     odds_data = getTotals()
     events = []
@@ -107,13 +111,14 @@ def sendEmail(message):
         server.sendmail(SENDER_EMAIL, RECEIVER_EMAIL, message)
 
 #FIX to pull data at start of the game and then compare every 20 minutes to the start 
+#Fix to list the game that changes points in email
 if __name__ == '__main__':
     while True:
         while datetime.datetime.now().hour >= 18 and datetime.datetime.now().hour < 24: 
             print("Prompting 1")
             data = cleanShittyJson()
             print(data)
-            time.sleep(1200) 
+            time.sleep(1800) 
             print("Prompting 2")
             dataTwo = cleanShittyJson()
             print(dataTwo)
