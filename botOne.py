@@ -53,7 +53,7 @@ def getTotals():
 
 #Find more implicit compare method
 def compareOutputs(df1, df2):
-merged_df = pd.merge(df1, df2, on='Event ID', suffixes=('_df1', '_df2'))
+    merged_df = pd.merge(df1, df2, on='Event ID', suffixes=('_df1', '_df2'))
 
     # Calculate the absolute difference in 'Totals' and add it as a new column
     merged_df['Totals Difference'] = (merged_df['Totals_df1'] - merged_df['Totals_df2']).abs()
@@ -107,7 +107,6 @@ def cleanShittyJson():
 
 def sendEmail(message):
     context = ssl.create_default_context()
-
     with smtplib.SMTP_SSL(SMTP_SERVER, SMTP_PORT, context=context) as server:
         server.login(SENDER_EMAIL, EMAIL_PASSWORD)
         server.sendmail(SENDER_EMAIL, RECEIVER_EMAIL, message)
