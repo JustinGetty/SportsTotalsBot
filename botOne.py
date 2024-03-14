@@ -50,9 +50,10 @@ def getTotals():
     else:
         print(f'Its broken')
     return odds_json
+
 #Find more implicit compare method
 def compareOutputs(df1, df2):
-    merged_df = pd.merge(df1, df2, on='Event ID', suffixes=('_df1', '_df2'))
+merged_df = pd.merge(df1, df2, on='Event ID', suffixes=('_df1', '_df2'))
 
     # Calculate the absolute difference in 'Totals' and add it as a new column
     merged_df['Totals Difference'] = (merged_df['Totals_df1'] - merged_df['Totals_df2']).abs()
@@ -61,7 +62,8 @@ def compareOutputs(df1, df2):
     significant_diffs = merged_df[merged_df['Totals Difference'] >= 15]
 
     # Select columns to include the team names along with the Event ID and Totals Difference
-    output_columns = ['Event ID', 'Home Team_df1', 'Away Team_df1', 'Totals_df1', 'Totals_df2', 'Totals Difference']
+    # If broke, put event id back in this 'Event ID'
+    output_columns = ['Home Team_df1', 'Away Team_df1', 'Totals_df1', 'Totals_df2', 'Totals Difference']
 
     # Check if there are any significant differences
     if significant_diffs.empty:
