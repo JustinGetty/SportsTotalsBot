@@ -2,18 +2,17 @@ import pandas as pd
 import datetime
 
 
-def customStringLimiter(
-
+def customStringLimiter(string, maxLength):
+    return string[:maxLength]
 def createBaseFrame(baseFrame):
-    maxLength = 16
-
     compareFrame = pd.DataFrame()
     for i in baseFrame['Commence Time']:
         j = str(i).replace("T", " ").replace("Z", " ")
-        jLimited = 
-        print(j)
-        print(datetime.datetime.now())
-        #print(datetime.datetime.now().strftime('%M:%S.%f')[:-4])
+        jLimited = customStringLimiter(j, 16) 
+        currentTime = str(datetime.datetime.now()) 
+        currentTimeLimited = customStringLimiter(currentTime, 16)
+        #FIX THIS CODE TO APPEND START TIME ROW TO COMPARE FRAME
+        #compareFrame.append(baseFrame.loc(i))
 
 if __name__ == '__main__':
     data1 = {
