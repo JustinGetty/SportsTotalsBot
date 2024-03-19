@@ -67,7 +67,6 @@ def compareOutputs(df1, df2):
 
     # Check if there are any significant differences
     if significant_diffs.empty:
-        print("No significant differences in Totals found.")
         return False, None  # Return False indicating no significant differences, and None for the DataFrame
     else:
         # If significant differences were found, print them and return True and the DataFrame
