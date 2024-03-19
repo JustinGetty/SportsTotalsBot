@@ -127,6 +127,7 @@ if __name__ == '__main__':
     #TODO fix it so duplicte messages arent sent!!!!!!!!!! Make a counter or something
     while True:
         if datetime.datetime.now().hour == 18: 
+            homeArray = []
             print("Initial Prompt")
             data = cleanShittyJson()
             while datetime.datetime.now().hour >= 18 and datetime.datetime.now().hour < 24: 
@@ -140,9 +141,14 @@ if __name__ == '__main__':
                 hasDifference, difference = compareOutputs(data, dataTwo)
                 if hasDifference:
                     print(difference)
-                    message = f"From: {SENDER_EMAIL}\nTo: {RECEIVER_EMAIL}\nSubject: Change in totals\n\nHere is the d                                  ifference: \n {difference}"
-                    sendEmail(message)
-                    print("email sent")
+                    homeTeam = str(difference['Home Team _df1'])  
+                    if homeTeam in homeArray:
+                        print("Difference already reported")
+                    else:
+                        homeArray.append(homeTeam)
+                        message = f"From: {SENDER_EMAIL}\nTo: {RECEIVER_EMAIL}\nSubject: Change in totals\n\nHere is the difference: \n {difference}"
+                        sendEmail(message)
+                        print("email sent")
                 else:
                     print("No significant diference, no email sent")
 
