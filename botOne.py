@@ -125,14 +125,13 @@ def sendEmail(message):
 #Fix to list the game that changes points in email
 if __name__ == '__main__':
     while True:
-        if datetime.datetime.now().hour == 21: 
-            count = 0
+        if datetime.datetime.now().hour == 18: 
             print("Initial Prompt")
             data = cleanShittyJson()
             while datetime.datetime.now().hour >= 18 and datetime.datetime.now().hour < 24: 
                 print("Data Initial")
                 print(data)
-                time.sleep(900) 
+                time.sleep(1440) 
                 print("Prompting 2")
                 dataTwo = cleanShittyJson()
                 print(dataTwo)
