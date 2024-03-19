@@ -70,7 +70,6 @@ def compareOutputs(df1, df2):
         return False, None  # Return False indicating no significant differences, and None for the DataFrame
     else:
         # If significant differences were found, print them and return True and the DataFrame
-        print(significant_diffs[output_columns])
         return True, significant_diffs[output_columns]
 
 
