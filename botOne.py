@@ -124,6 +124,7 @@ def sendEmail(message):
 #FIX to pull data at start of the game and then compare every 20 minutes to the start 
 #Fix to list the game that changes points in email
 if __name__ == '__main__':
+    #TODO fix it so duplicte messages arent sent!!!!!!!!!! Make a counter or something
     while True:
         if datetime.datetime.now().hour == 18: 
             print("Initial Prompt")
