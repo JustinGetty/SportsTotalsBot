@@ -126,23 +126,26 @@ def sendEmail(message):
 #Fix to list the game that changes points in email
 if __name__ == '__main__':
     while True:
-        while datetime.datetime.now().hour >= 18 and datetime.datetime.now().hour < 24: 
-            print("Prompting 1")
+        if datetime.datetime.now().hour == 21: 
+            count = 0
+            print("Initial Prompt")
             data = cleanShittyJson()
-            print(data)
-            time.sleep(1800) 
-            print("Prompting 2")
-            dataTwo = cleanShittyJson()
-            print(dataTwo)
+            while datetime.datetime.now().hour >= 18 and datetime.datetime.now().hour < 24: 
+                print("Data Initial")
+                print(data)
+                time.sleep(900) 
+                print("Prompting 2")
+                dataTwo = cleanShittyJson()
+                print(dataTwo)
 
-            hasDifference, difference = compareOutputs(data, dataTwo)
-            if hasDifference:
-                print(difference)
-                message = f"From: {SENDER_EMAIL}\nTo: {RECEIVER_EMAIL}\nSubject: Change in totals\n\nHere is the difference: \n {difference}"
-                sendEmail(message)
-                print("email sent")
-            else:
-                print("No significant diference, no email sent")
+                hasDifference, difference = compareOutputs(data, dataTwo)
+                if hasDifference:
+                    print(difference)
+                    message = f"From: {SENDER_EMAIL}\nTo: {RECEIVER_EMAIL}\nSubject: Change in totals\n\nHere is the d                                  ifference: \n {difference}"
+                    sendEmail(message)
+                    print("email sent")
+                else:
+                    print("No significant diference, no email sent")
 
 
 
