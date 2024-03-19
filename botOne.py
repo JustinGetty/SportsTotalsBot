@@ -73,6 +73,17 @@ def compareOutputs(df1, df2):
         # If significant differences were found, print them and return True and the DataFrame
         print(significant_diffs[output_columns])
         return True, significant_diffs[output_columns]
+
+
+
+#def baseFrame(baseFrame):
+#    compareFrame = pd.DataFrame() 
+#    for i in baseFrame['Start Time']:
+#        if datetime.datetime.now() == i: 
+#            compareFrame.append(baseFrame.loc[i]
+            
+            
+
 def cleanShittyJson():
     odds_data = getTotals()
     events = []
@@ -97,11 +108,11 @@ def cleanShittyJson():
                         point = outcome['point']
                         if event_id not in eventIdCleaner:
                             events.append([event_id, home_team, away_team, 
-                                        bookmaker_title, point])
+                                        commence_time, point])
                             
                         eventIdCleaner.append(event_id)
     columns = ['Event ID', 'Home Team', 'Away Team', 
-               'Bookmaker Title', 'Totals']
+               'Start Time', 'Totals']
     df = pd.DataFrame(events, columns=columns)
     return df
 
