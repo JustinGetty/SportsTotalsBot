@@ -140,14 +140,17 @@ if __name__ == '__main__':
                 hasDifference, difference = compareOutputs(data, dataTwo)
                 if hasDifference:
                     print(difference)
-                    homeTeam = str(difference['Home Team _df1'])  
-                    if homeTeam in homeArray:
-                        print("Difference already reported")
-                    else:
-                        homeArray.append(homeTeam)
-                        message = f"From: {SENDER_EMAIL}\nTo: {RECEIVER_EMAIL}\nSubject: Change in totals\n\nHere is the difference: \n {difference}"
-                        sendEmail(message)
-                        print("email sent")
+                    try:
+                        homeTeam = str(difference['Home Team_df1'])  
+                        if homeTeam in homeArray:
+                            print("Difference already reported")
+                        else:
+                            homeArray.append(homeTeam)
+                            message = f"From: {SENDER_EMAIL}\nTo: {RECEIVER_EMAIL}\nSubject: Change in totals\n\nHere is the difference: \n {difference}"
+                            sendEmail(message)
+                            print("email sent")
+                    except:
+                        print("Error is in main statement, dont do implicit comparison shit BROKEN")
                 else:
                     print("No significant diference, no email sent")
 
