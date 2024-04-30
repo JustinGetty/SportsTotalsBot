@@ -18,6 +18,9 @@ Code extensibilty:
 
 I built this in a way that if you wanted additonal game information, such as other odds or other games, it would be simple to pull these odds into their own frame. By nature of the api request, more data is pulled then needed, this way if a user wanted to also be alerted of a change in say moneyline odds, it would not use any extra requests.
 
+Example alert:
+
+![image](https://github.com/JustinGetty/SportsTotalsBot/assets/163033045/ff999db3-f2d5-480b-9099-99323e89c1f8)
 
 
 
