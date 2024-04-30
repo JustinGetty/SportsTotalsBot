@@ -1,6 +1,6 @@
 Goal:
 
-The goal of Sports Totals Bot is to compare the difference between the total points odds for an NBA game before the start of the game, and then check every 20 minutes after the start. If a change of 15 points or more is detected, it will send an email to the client alerting them of this change, so that they may place a bet in a timely matter.
+The goal of Sports Totals Bot is to compare the difference between the total points odds for an NBA game before the start of the game, and then check every 20 minutes after the start. If a change of 15 points or more is detected, it will send an email to the client alerting them of this change, so that they may place a bet in a timely manner.
 
 Purpose:
 
