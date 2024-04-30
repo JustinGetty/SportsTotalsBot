@@ -1,3 +1,13 @@
+Skills demonstrated:
+
+- API usage
+- Pandas dataframes
+- Emails with SSL
+- Using Python on remote servers
+- Using repositories
+- Coded entirely in VIM
+- Overall practice making large Python scripts, debugging, using Python modules
+
 Goal:
 
 The goal of Sports Totals Bot is to compare the difference between the total points odds for an NBA game before the start of the game, and then check every 20 minutes after the start. If a change of 15 points or more is detected, it will send an email to the client alerting them of this change, so that they may place a bet in a timely manner.
