@@ -83,7 +83,7 @@ def compareOutputs(df1, df2):
             
             
 
-def cleanShittyJson():
+def cleanJson():
     odds_data = getTotals()
     events = []
     eventIdCleaner = []
@@ -127,13 +127,13 @@ if __name__ == '__main__':
         if datetime.datetime.now().hour == 18: 
             homeArray = []
             print("Initial Prompt")
-            data = cleanShittyJson()
+            data = cleanJson()
             while datetime.datetime.now().hour >= 18 and datetime.datetime.now().hour < 24: 
                 print("Data Initial")
                 print(data)
                 time.sleep(1440) 
                 print("Prompting 2")
-                dataTwo = cleanShittyJson()
+                dataTwo = cleanJson()
                 print(dataTwo)
 
                 hasDifference, difference = compareOutputs(data, dataTwo)
@@ -149,7 +149,7 @@ if __name__ == '__main__':
                             sendEmail(message)
                             print("email sent")
                     except:
-                        print("Error is in main statement, dont do implicit comparison shit BROKEN")
+                        print("Error is in main statement, dont do implicit comparison anymore")
                 else:
                     print("No significant diference, no email sent")
 
