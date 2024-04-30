@@ -10,15 +10,16 @@ import ssl
 # TODO adjust logic to pull frame 1 at start of game and reset frame 2 every 20 min to compare
 SMTP_SERVER = "smtp.gmail.com"
 SMTP_PORT = 465
-SENDER_EMAIL = "justingetty55@gmail.com"
-RECEIVER_EMAIL = "matthewgeib1365@gmail.com"
-EMAIL_PASSWORD = "fbdf fkib pgcw jgak"
-
-API_KEY = 'b23fc22e2b337a48421b2b94b1fa5e80'
+SENDER_EMAIL = "EnterYourEmail@gmail.com"
+RECEIVER_EMAIL = "EnterRecieverEmail@gmail.com"
+#NOTE sometimes google requires an app password when using in inline code, go to your google account and create one
+EMAIL_PASSWORD = "EmailPassword"
+#API key for odds api
+API_KEY = 'api_key'
 
 def getTotals():
     SPORT = 'basketball_nba' # NBA sport key
-    REGIONS = 'us' # Focusing on US region
+    REGIONS = 'us' 
     MARKETS = 'totals' #Totals market
     ODDS_FORMAT = 'decimal' # Using decimal format for odds
     DATE_FORMAT = 'iso' # Using ISO format for dates
@@ -51,7 +52,7 @@ def getTotals():
         print(f'Its broken')
     return odds_json
 
-#Find more implicit compare method
+#TODO Find more implicit compare method
 def compareOutputs(df1, df2):
     merged_df = pd.merge(df1, df2, on='Event ID', suffixes=('_df1', '_df2'))
 
@@ -120,11 +121,8 @@ def sendEmail(message):
         server.login(SENDER_EMAIL, EMAIL_PASSWORD)
         server.sendmail(SENDER_EMAIL, RECEIVER_EMAIL, message)
 
-#FIX to pull data at start of the game and then compare every 20 minutes to the start 
-#Fix to list the game that changes points in email
 if __name__ == '__main__':
     print("Bot is active.")
-    #TODO fix it so duplicte messages arent sent!!!!!!!!!! Make a counter or something
     while True:
         if datetime.datetime.now().hour == 18: 
             homeArray = []
