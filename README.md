@@ -1,21 +1,3 @@
-Skills demonstrated:
-
-- API usage
-- Pandas dataframes
-- Emails with SSL
-- Using Python on remote servers
-- Using repositories
-- Coded entirely in VIM
-- Overall practice making large Python scripts, debugging, using Python modules
-
-Goal:
-
-The goal of Sports Totals Bot is to compare the difference between the total points odds for an NBA game before the start of the game, and then check every 20 minutes after the start. If a change of 15 points or more is detected, it will send an email to the client alerting them of this change, so that they may place a bet in a timely manner.
-
-Purpose:
-
-The reason for doing this is a popular sports betting technique is to place a bet on the total points estimate, either over or under, for the combined points of two NBA games. For example, if the Philadelphia Sixers are playing the Brookyln Nets, the projected total for this game prior to the start could be 220. This means that between the two teams, 220 points will be scored. Say this total estimate drops to 203 after the first quarter, although the official odds for this game are saying it's unlikely that the total for the game will surpass 203, if you were to place a bet on the over now, it provides better and unique odds for the person placing a bet on the over. Additionally, by automating this the user or client will no longer have to manually keep track of the totals nor will they have to constantly check the totals on Sportsbooks, as they will receive an alert telling them the new total, which game it is, and the amount the total changed.
-
 Usage:
 
 The user will have to enter their email and password, as well as the email they desire the notification to be sent to (it can be the same if you would like to alert yourself). You will need to enter your own api key from https://the-odds-api.com/#get-access, which has free tier that permits 500 requests per month. You will need Pandas installed, and the program will constantly run so it needs to be ran on a server or a machine that will not be turned off.
